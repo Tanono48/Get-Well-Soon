@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Well Soon na</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 2000px; /* Add a height to simulate scrolling */
+        }
+
+        .video-container {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 800px; /* Set a maximum width for the video container */
+            margin: auto;
+            z-index: 1; /* Adjust the z-index to control the stacking order */
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Content to simulate scrolling -->
+<div style="height: 1500px; background-color: #fff;">
+    <!-- Your content goes here -->
+</div>
+
+<div class="video-container" id="videoContainer">
+    <video id="scrollVideo" controls>
+        <source src="123.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+<script>
+    var video = document.getElementById('scrollVideo');
+    var videoContainer = document.getElementById('videoContainer');
+    var scrollSpeed = 0.1; // Adjust this value based on your preference
+
+    window.addEventListener('scroll', function() {
+        var scrollPos = window.scrollY || window.scrollTop || document.getElementsByTagName("html")[0].scrollTop;
+        var windowHeight = window.innerHeight;
+
+        // Check if the video container is in the viewport
+        if (scrollPos > windowHeight - videoContainer.clientHeight) {
+            videoContainer.style.visibility = 'visible';
+            videoContainer.style.opacity = 1;
+            video.playbackRate = 1 + (scrollPos - (windowHeight - videoContainer.clientHeight)) * scrollSpeed;
+        } else {
+            videoContainer.style.visibility = 'hidden';
+            videoContainer.style.opacity = 0;
+        }
+    });
+</script>
+
+</body>
+</html>
