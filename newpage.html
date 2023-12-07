@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Well Soon na</title>
+    <title>Responsive Video with Continuous Scroll</title>
     <style>
         body {
             margin: 0;
@@ -34,7 +34,7 @@
 <body>
 
 <!-- Content to simulate scrolling -->
-<div style="height: 1500px; background-color: #fff;">
+<div style="height: 1500px; background-color: #f0f0f0;">
     <!-- Your content goes here -->
 </div>
 
@@ -49,6 +49,7 @@
     var video = document.getElementById('scrollVideo');
     var videoContainer = document.getElementById('videoContainer');
     var scrollSpeed = 0.1; // Adjust this value based on your preference
+    var isVideoVisible = false;
 
     window.addEventListener('scroll', function() {
         var scrollPos = window.scrollY || window.scrollTop || document.getElementsByTagName("html")[0].scrollTop;
@@ -56,12 +57,21 @@
 
         // Check if the video container is in the viewport
         if (scrollPos > windowHeight - videoContainer.clientHeight) {
-            videoContainer.style.visibility = 'visible';
-            videoContainer.style.opacity = 1;
+            if (!isVideoVisible) {
+                videoContainer.style.visibility = 'visible';
+                videoContainer.style.opacity = 1;
+                isVideoVisible = true;
+                video.play();
+            }
+
             video.playbackRate = 1 + (scrollPos - (windowHeight - videoContainer.clientHeight)) * scrollSpeed;
         } else {
-            videoContainer.style.visibility = 'hidden';
-            videoContainer.style.opacity = 0;
+            if (isVideoVisible) {
+                video.pause();
+                isVideoVisible = false;
+                videoContainer.style.visibility = 'hidden';
+                videoContainer.style.opacity = 0;
+            }
         }
     });
 </script>
